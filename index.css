@@ -1,0 +1,122 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap');
+
+*{
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  outline: none;
+  font-family: 'Cormorant Garamond', serif;
+}
+img {
+    width: 25rem;
+    padding-bottom: 0;
+}
+
+body{
+    background: url(images/background.jpg) no-repeat center center fixed; 
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: 100%;
+}
+
+.wrapper{
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 100%;
+  max-width: 550px;
+  background: rgba(0,0,0,0.8);
+  padding: 30px;
+  border-radius: 5px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.3);
+}
+
+.wrapper .title h2{
+  color: #FCFCF4;
+  font-size: 2rem;
+  text-align: center;
+  margin-bottom: 25px;
+}
+
+.contact-form{
+  display: flex;
+  justify-content: center;
+}
+
+.input-fields{
+  display: flex;
+  align-items: center;
+  flex-direction: column;
+  margin-right: 4%;
+}
+
+.input-fields {
+  width: 48%;
+}
+
+.input-fields .input, textarea{
+  margin: 10px 0;
+  background: transparent;
+  border: 0px;
+  border-bottom: 2px solid #FCFCF4;
+  padding: 10px;
+  color: #FCFCF4;
+  font-size: 1rem;
+  width: 100%;
+}
+
+::-webkit-input-placeholder {
+  /* Chrome/Opera/Safari */
+  color: #FCFCF4;
+}
+::-moz-placeholder {
+  /* Firefox 19+ */
+  color: #FCFCF4;
+}
+:-ms-input-placeholder {
+  /* IE 10+ */
+  color: #FCFCF4;
+}
+
+/* BUTTON STYLING */
+button {
+    color: #FCFCF4 !important;
+    text-transform: uppercase;
+    background: #ECA547;
+    padding: 10px;
+    border: 2px solid #ECA547 !important;
+    border-radius: 6px;
+    display: flex;
+    justify-content: center;
+    text-align: center;
+    width: 6rem;
+    transition: all 0.3s ease 0s;
+}
+button:hover {
+    color: #ffffff !important;
+    font-size: large;
+    font-weight: 700 !important;
+    letter-spacing: 2px;
+    background: none;
+    cursor: pointer;
+    -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+    transition: all 0.3s ease 0s;
+}
+
+@media screen and (max-width: 600px){
+  .contact-form{
+    flex-direction: column;
+  }
+  body{
+    -webkit-background-size: cover;
+    -moz-background-size: cover;
+    -o-background-size: cover;
+    background-size: cover;
+    width: max-content;
+}
+}
