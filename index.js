@@ -1,7 +1,7 @@
 'use strict';
 
 const apiKey = "a573f79888c882ab54b3f22d1b68c8cd";
-const url = "https://developers.zomato.com/api/v2.1"
+const url = "https://developers.zomato.com/api/v2.1/search"
 
 function renderElements(){};
 
