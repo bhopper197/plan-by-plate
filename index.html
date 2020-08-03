@@ -12,14 +12,23 @@
             <h2><img id="logo" src="images/logo.png" alt="logo"></h2>
         </div>
         <div class="contact-form">
-            <div class="input-fields">
-            <input id="city" type="text" class="input" placeholder="City">
-            <input id="cuisine" type="text" class="input" placeholder="Cuisine">
-            <button>Go</button>
-            </div>
+            <form class="input-fields">
+                <input id="search-term" type="text" class="input" placeholder="City">
+                <input id="cuisine" type="text" class="input" placeholder="Cuisine">
+                <input type="hidden" id="latitude-input">
+                <input type="hidden" id="longitude-input">
+                <button id="search">Go</button>
+            </form>
         </div>
-    </div>	
+    </div>
 </body>
+<!-- jQuery library. -->
 <script src="https://unpkg.com/jquery" crossorigin="anonymous"></script>
-<script src = "./index.js"></script>
+
+    <!-- Google Maps Javascript Library. -->
+<script type="text/javascript" src="//maps.googleapis.com/maps/api/js?
+    v=3.exp&libraries=places&key=AIzaSyBoRpN_--w3lFXRNu1PIv_cho5xqP1E32s"></script>
+
+<!-- Local JavaScript file. -->
+<script src = "index.js"></script>
 </html>

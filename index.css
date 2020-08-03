@@ -12,6 +12,10 @@ img {
     padding-bottom: 0;
 }
 
+p {
+  color: #FCFCF4;
+}
+
 body{
     background: url(images/background.jpg) no-repeat center center fixed; 
     -webkit-background-size: cover;
