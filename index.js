@@ -5,7 +5,9 @@ const url = "https://developers.zomato.com/api/v2.1/search";
 
 const searchInput = "search-term";
 
-$(document).ready(function inputAutoComplete() {
+$(document).ready(function () {
+  $(".wrapper").hide().fadeIn(3500);
+
   var autoComplete = new 
   google.maps.places.Autocomplete((document.getElementById("search-term")), {
     types: ['geocode']
@@ -13,49 +15,37 @@ $(document).ready(function inputAutoComplete() {
 
     google.maps.event.addListener(autoComplete, "place_changed", function() {
         let near_place = autoComplete.getPlace();
-        document.getElementById("latitude-input").value = 
-        near_place.geometry.location.lat();
-
-        document.getElementById("longitude-input").value = 
-        near_place.geometry.location.lng();
-
-        // document.getElementById("latitude-view").innerHTML = 
-        // near_place.geometry.location.lat();
-
-        // document.getElementById("longitude-view").innerHTML = 
-        // near_place.geometry.location.lng();
         console.log(near_place.geometry.location.lat());
         console.log(near_place.geometry.location.lng());
     });
-
   });
 
-  $(document).on("change", "#"+searchInput, function() {
-    document.getElementById("latitude-input").value = "";
-    document.getElementById("longitude-input").value = "";
-  });
+const restaurantProps = {
+  name: "Gino's",
+  cuisines: "Italian",
+  user_rating: "4.5",
+  highlights: "Tuscan plates, Small PLates, Bread."
+};
 
-  const restaurant = [
-    {
-      name: "responseJson.restaurant.name",
-      cuisines: "responseJson.restaurant.cuisines",
-      user_rating: 
-      "responseJson.restaurant.user_rating.aggregate_rating",
-      highlights: "restaurant.highlights"
-    },
-  ];
+function testMakeTileHtml(){
+  let html = makeTileHtml(restaurantProps);
+  return html;
+};
 
-function makeTileHtml(){
-  const restaurant = `<div class="wrapper-tile">
+
+function makeTileHtml(restaurantProps){
+  const tileHtml = `<div class ="wrapper-tile">
   <div class="restaurant-form">
       <div class="input-fields">
-          <h1>${restaurant.name}</h1>
-          <h3>${restaurant.user_rating}</h3>
-          <p>${restaurant.highlights}</p>
+          <h1>${restaurantProps.name}</h1>
+          <h3>${restaurantProps.cuisines}</h3>
+          <p>${restaurantProps.highlights}</p>
           <button id="add-plate">+</button>
       </div>
   </div>
 </div>`
+
+return tileHtml;
 };
 
 function renderElements(){}; 
@@ -74,10 +64,10 @@ function testGetRestaurants(){
   const params = {
     userKey: apiKey,
     url: url,
-    q: "Italian",
-    lat: 40.732013,
-    lon: -73.996155,
-    count: 1,
+    q: "Italian", // Pass in the user query string.
+    lat: 40.732013, // Pass in the lat from the autocomplete.
+    lon: -73.996155, // Pass in the lng from the autocomplete.
+    count: 1, // Limit results to 10 at a time.
   };
 
   let output = getRestaurants(params);
