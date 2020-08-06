@@ -5,7 +5,7 @@ const url = "https://developers.zomato.com/api/v2.1/search";
 
 const searchInput = "search-term";
 
-$(document).ready(function () {
+$(function getAutocomplete() {
   $(".wrapper").hide().fadeIn(3500);
 
   var autoComplete = new 
@@ -14,9 +14,13 @@ $(document).ready(function () {
   });
 
     google.maps.event.addListener(autoComplete, "place_changed", function() {
-        let near_place = autoComplete.getPlace();
-        console.log(near_place.geometry.location.lat());
-        console.log(near_place.geometry.location.lng());
+      var near_place = autoComplete.getPlace();
+
+      document.getElementById("latitude-input").value = 
+      near_place.geometry.location.lat();
+
+      document.getElementById("longitude-input").value = 
+      near_place.geometry.location.lng();
     });
   });
 
@@ -25,6 +29,18 @@ const restaurantProps = {
   cuisines: "Italian",
   user_rating: "4.5",
   highlights: "Tuscan plates, Small PLates, Bread."
+};
+
+function testHandleGoButton(latitude, longitude){
+  $( "#search" ).click(function() {
+    let latitude = $("#latitude-input").val();
+    let longitude = $("#longitude-input").val();
+    let cuisine = $("#cuisine").val();
+
+    console.log(latitude);
+    console.log(longitude);
+    console.log(cuisine);
+  });
 };
 
 function testMakeTileHtml(){
@@ -59,14 +75,17 @@ function formatQueryParams(params) {
 }
 
 function testGetRestaurants(){
+  const latitude = $("#latitude-input").val();
+  const longitude = $("#longitude-input").val();
+  const cuisine = $("#cuisine").val();
   // Input = {lat, long}
   // Output = Json Object
   const params = {
     userKey: apiKey,
     url: url,
-    q: "Italian", // Pass in the user query string.
-    lat: 40.732013, // Pass in the lat from the autocomplete.
-    lon: -73.996155, // Pass in the lng from the autocomplete.
+    q: cuisine, // Pass in the user query string.
+    lat: latitude, // Pass in the lat from the autocomplete.
+    lon: longitude, // Pass in the lng from the autocomplete.
     count: 1, // Limit results to 10 at a time.
   };
 
@@ -108,7 +127,8 @@ function getRestaurants(params) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    getRestaurants();
+    testHandleGoButton();
+    // getRestaurants();
   });
 }
 
