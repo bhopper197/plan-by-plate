@@ -28,10 +28,10 @@ const restaurantProps = {
   name: "Gino's",
   cuisines: "Italian",
   user_rating: "4.5",
-  highlights: "Tuscan plates, Small PLates, Bread."
+  highlights: "Tuscan plates, Small Plates, Bread."
 };
 
-function testHandleGoButton(latitude, longitude){
+function testHandleGoButton(){
   $( "#search" ).click(function() {
     let latitude = $("#latitude-input").val();
     let longitude = $("#longitude-input").val();
@@ -48,12 +48,12 @@ function testMakeTileHtml(){
   return html;
 };
 
-
 function makeTileHtml(restaurantProps){
   const tileHtml = `<div class ="wrapper-tile">
   <div class="restaurant-form">
       <div class="input-fields">
           <h1>${restaurantProps.name}</h1>
+          <h2>${restaurantProps.user_rating}/5</h2>
           <h3>${restaurantProps.cuisines}</h3>
           <p>${restaurantProps.highlights}</p>
           <button id="add-plate">+</button>
@@ -78,15 +78,14 @@ function testGetRestaurants(){
   const latitude = $("#latitude-input").val();
   const longitude = $("#longitude-input").val();
   const cuisine = $("#cuisine").val();
-  // Input = {lat, long}
-  // Output = Json Object
-  const params = {
+
+  var params = {
     userKey: apiKey,
     url: url,
     q: cuisine, // Pass in the user query string.
     lat: latitude, // Pass in the lat from the autocomplete.
     lon: longitude, // Pass in the lng from the autocomplete.
-    count: 1, // Limit results to 10 at a time.
+    count: 5, // Limit results to 5 at a time.
   };
 
   let output = getRestaurants(params);
@@ -97,7 +96,8 @@ function testGetRestaurants(){
 function getRestaurants(params) {
   const options = {
     headers: new Headers({
-      "user-key": params.userKey})
+      "user-key": params.userKey
+    })
   };
 
   const userKey = params.apiKey;
@@ -128,7 +128,6 @@ function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     testHandleGoButton();
-    // getRestaurants();
   });
 }
 

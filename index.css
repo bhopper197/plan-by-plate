@@ -8,7 +8,7 @@
   font-family: 'Cormorant Garamond', serif;
 }
 img {
-    width: 25rem;
+    width: 45rem;
     padding-bottom: 0;
 }
 
@@ -24,14 +24,17 @@ body{
     background-size: cover;
     width: 100%;
 }
+::placeholder {
+  color: lightgray;
+}
 
 .wrapper{
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
   width: 100%;
-  max-width: 550px;
+  max-width: 750px;
   background: rgba(0,0,0,0.8);
   padding: 30px;
   border-radius: 5px;
@@ -40,7 +43,7 @@ body{
 
 .wrapper .title h2{
   color: #FCFCF4;
-  font-size: 2rem;
+  font-size: 3rem;
   text-align: center;
   margin-bottom: 25px;
 }
@@ -58,17 +61,17 @@ body{
 }
 
 .input-fields {
-  width: 48%;
+  width: 50%;
 }
 
 .input-fields .input, textarea{
-  margin: 10px 0;
+  margin: 15px 0;
   background: transparent;
   border: 0px;
   border-bottom: 2px solid #FCFCF4;
   padding: 10px;
   color: #FCFCF4;
-  font-size: 1rem;
+  font-size: 1.5rem;
   width: 100%;
 }
 
@@ -90,18 +93,19 @@ button {
     color: #FCFCF4 !important;
     text-transform: uppercase;
     background: #ECA547;
-    padding: 10px;
+    font-size: 2rem;
+    padding: 15px;
     border: 2px solid #ECA547 !important;
     border-radius: 6px;
     display: flex;
     justify-content: center;
     text-align: center;
-    width: 6rem;
+    width: 8rem;
     transition: all 0.3s ease 0s;
 }
 button:hover {
     color: #ffffff !important;
-    font-size: large;
+    font-size: larger;
     font-weight: 700 !important;
     letter-spacing: 2px;
     background: none;
