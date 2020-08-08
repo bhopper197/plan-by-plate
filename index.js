@@ -24,6 +24,7 @@ $(function getAutocomplete() {
     });
   });
 
+  // COMMENT OUT LATER.
 const restaurantProps = {
   name: "Gino's",
   cuisines: "Italian",
@@ -33,13 +34,22 @@ const restaurantProps = {
 
 function testHandleGoButton(){
   $( "#search" ).click(function() {
-    let latitude = $("#latitude-input").val();
-    let longitude = $("#longitude-input").val();
-    let cuisine = $("#cuisine").val();
+    $( ".wrapper" ).fadeOut(1500);
+    const latitude = $("#latitude-input").val();
+    const longitude = $("#longitude-input").val();
+    const cuisine = $("#cuisine").val();
+  
+    var params = {
+      userKey: apiKey,
+      url: url,
+      q: cuisine, // Pass in the user query string.
+      lat: latitude, // Pass in the lat from the autocomplete.
+      lon: longitude, // Pass in the lng from the autocomplete.
+      count: 5, // Limit results to 10 at a time.
+    };
 
-    console.log(latitude);
-    console.log(longitude);
-    console.log(cuisine);
+    let output = getRestaurants(params);
+    console.log(output);
   });
 };
 
@@ -49,22 +59,82 @@ function testMakeTileHtml(){
 };
 
 function makeTileHtml(restaurantProps){
-  const tileHtml = `<div class ="wrapper-tile">
-  <div class="restaurant-form">
-      <div class="input-fields">
-          <h1>${restaurantProps.name}</h1>
-          <h2>${restaurantProps.user_rating}/5</h2>
-          <h3>${restaurantProps.cuisines}</h3>
-          <p>${restaurantProps.highlights}</p>
-          <button id="add-plate">+</button>
-      </div>
-  </div>
-</div>`
+  const tileHtml = `
+  <section id="results" class="hidden">
+    <h1>Plates to Discover</h1>
+    <ul id="results-list">
+      <li>
+        <div class ="wrapper">
+              <div class="restaurant-form">
+                  <div class="input-fields">
+                      <h2>${restaurantProps.name}</h1>
+                      <h3>${restaurantProps.user_rating}/5</h2>
+                      <h3>${restaurantProps.cuisines}</h3>
+                      <p>${restaurantProps.highlights}</p>
+                  </div>
+              </div>
+          </div>
+      </li>
+    </ul>
+  </section>`;
 
 return tileHtml;
 };
 
-function renderElements(){}; 
+function displayRestaurants(responseJson){
+    console.log(responseJson);
+    // Empty out any prior results.
+    $("#results-list").empty();
+
+    for (let i = 0; i < responseJson.restaurants.length; i++){
+      var restaurantProps = {
+        name: 
+        responseJson.restaurants[i].restaurant.name,
+        
+        timings: 
+        responseJson.restaurants[i].restaurant.timings,
+  
+        user_rating: 
+        responseJson.restaurants[i].restaurant.user_rating.aggregate_rating,
+
+        menu:
+        responseJson.restaurants[i].restaurant.menu_url,
+
+        image:
+        responseJson.restaurants[i].restaurant.featured_image,
+
+        cost:
+        responseJson.restaurants[i].restaurant.average_cost_for_two,
+
+        currency:
+        responseJson.restaurants[i].restaurant.currency
+      };
+
+      $("#results-list").hide().fadeIn(1000).append(
+          `<li>
+            <div class ="wrapper-tile">
+                  <div class="tile-form">
+                      <div class="tile-fields">
+                          <h2>${restaurantProps.name}</h1>
+                          <img src="${restaurantProps.image}" alt="featured-image">
+                          <h3 class = "results">${restaurantProps.user_rating} Stars</h2>
+                          <h3 class = "input results"> 
+                          Average cost for two: 
+                          ${restaurantProps.currency}
+                          ${restaurantProps.cost}
+                          </h3>
+                          <h3 class = "input">${restaurantProps.timings}</h3>
+                          <a href="${restaurantProps.menu}" target="_blank">
+                      </div>
+                  </div>
+                  <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
+              </div>
+          </li>`
+      );
+    };
+    //display the results section  
+    $("#results").removeClass("hidden");
+};
 
 function updateDOM(){};
 
@@ -85,12 +155,31 @@ function testGetRestaurants(){
     q: cuisine, // Pass in the user query string.
     lat: latitude, // Pass in the lat from the autocomplete.
     lon: longitude, // Pass in the lng from the autocomplete.
-    count: 5, // Limit results to 5 at a time.
+    count: 5, // Limit results to 10 at a time.
   };
 
   let output = getRestaurants(params);
 
   console.log(output);
+};
+
+function getRestaurantProps(responseJson){
+  for (let i = 0; i < responseJson.restaurants.length; i++){
+    var restaurantProps = {
+      name: 
+      responseJson.restaurants[i].restaurant.name,
+      
+      cuisines: 
+      responseJson.restaurants[i].restaurant.establishment,
+
+      user_rating: 
+      responseJson.restaurants[i].restaurant.user_rating.aggregate_rating,
+
+      highlights: 
+      responseJson.restaurants[i].restaurant.highlights
+    };
+  };
+  return restaurantProps;
 };
 
 function getRestaurants(params) {
@@ -118,7 +207,8 @@ function getRestaurants(params) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => console.log(responseJson, params.count))
+    .then(responseJson => displayRestaurants(responseJson))
+    .then(responseJson => console.log(responseJson))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
