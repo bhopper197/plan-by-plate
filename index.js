@@ -24,15 +24,7 @@ $(function getAutocomplete() {
     });
   });
 
-  // COMMENT OUT LATER.
-const restaurantProps = {
-  name: "Gino's",
-  cuisines: "Italian",
-  user_rating: "4.5",
-  highlights: "Tuscan plates, Small Plates, Bread."
-};
-
-function testHandleGoButton(){
+function handleGoButton(){
   $( "#search" ).click(function() {
     $( ".wrapper" ).fadeOut(1500);
     const latitude = $("#latitude-input").val();
@@ -59,24 +51,26 @@ function testMakeTileHtml(){
 };
 
 function makeTileHtml(restaurantProps){
-  const tileHtml = `
-  <section id="results" class="hidden">
-    <h1>Plates to Discover</h1>
-    <ul id="results-list">
-      <li>
-        <div class ="wrapper">
-              <div class="restaurant-form">
-                  <div class="input-fields">
-                      <h2>${restaurantProps.name}</h1>
-                      <h3>${restaurantProps.user_rating}/5</h2>
-                      <h3>${restaurantProps.cuisines}</h3>
-                      <p>${restaurantProps.highlights}</p>
-                  </div>
-              </div>
-          </div>
-      </li>
-    </ul>
-  </section>`;
+  const tileHtml =
+  `<li>
+      <div class ="wrapper-tile">
+            <div class="tile-form">
+                <div class="tile-fields">
+                    <h2>${restaurantProps.name}</h1>
+                    <img src="${restaurantProps.image}" alt="featured-image">
+                    <h3 class = "results">${restaurantProps.user_rating} / 5 Stars</h2>
+                    <h3 class = "input results"> 
+                    Average cost for two: 
+                    ${restaurantProps.currency}
+                    ${restaurantProps.cost}
+                    </h3>
+                    <h3 class = "input">${restaurantProps.timings}</h3>
+                    <a href="${restaurantProps.menu}" target="_blank">
+                </div>
+            </div>
+            <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
+        </div>
+  </li>`
 
 return tileHtml;
 };
@@ -110,27 +104,7 @@ function displayRestaurants(responseJson){
         responseJson.restaurants[i].restaurant.currency
       };
 
-      $("#results-list").hide().fadeIn(1000).append(
-          `<li>
-            <div class ="wrapper-tile">
-                  <div class="tile-form">
-                      <div class="tile-fields">
-                          <h2>${restaurantProps.name}</h1>
-                          <img src="${restaurantProps.image}" alt="featured-image">
-                          <h3 class = "results">${restaurantProps.user_rating} Stars</h2>
-                          <h3 class = "input results"> 
-                          Average cost for two: 
-                          ${restaurantProps.currency}
-                          ${restaurantProps.cost}
-                          </h3>
-                          <h3 class = "input">${restaurantProps.timings}</h3>
-                          <a href="${restaurantProps.menu}" target="_blank">
-                      </div>
-                  </div>
-                  <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
-              </div>
-          </li>`
-      );
+      $("#results-list").hide().fadeIn(1500).append(makeTileHtml(restaurantProps));
     };
     //display the results section  
     $("#results").removeClass("hidden");
@@ -217,7 +191,7 @@ function getRestaurants(params) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    testHandleGoButton();
+    handleGoButton();
   });
 }
 
