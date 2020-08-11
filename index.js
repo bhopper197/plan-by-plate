@@ -24,6 +24,26 @@ $(function getAutocomplete() {
     });
   });
 
+
+// When the user scrolls the page, execute myFunction
+// window.onscroll = function() {handleHeaderScroll()};
+
+// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
+function handleHeaderScroll() {
+// Get the header
+var header = document.getElementById("myHeader");
+
+// Get the offset position of the navbar
+var sticky = header.offsetTop;
+
+  if (window.pageYOffset > sticky) {
+    header.classList.add("sticky");
+  } else {
+    header.classList.remove("sticky");
+  }
+}
+
+
 function handleGoButton(){
   $( "#search" ).click(function() {
     $( ".wrapper" ).fadeOut(1500);
@@ -56,19 +76,18 @@ function makeTileHtml(restaurantProps){
       <div class ="wrapper-tile">
             <div class="tile-form">
                 <div class="tile-fields">
-                    <h2>${restaurantProps.name}</h1>
-                    <img src="${restaurantProps.image}" alt="featured-image">
-                    <h3 class = "results">${restaurantProps.user_rating} / 5 Stars</h2>
+                    <h2 class = "results">${restaurantProps.name}</h2>
+                    <a href="${restaurantProps.menu}" target="_blank">
+                    <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
+                    <h3 class = "input">${restaurantProps.user_rating} / 5 Stars</h2>
                     <h3 class = "input results"> 
                     Average cost for two: 
                     ${restaurantProps.currency}
                     ${restaurantProps.cost}
                     </h3>
-                    <h3 class = "input">${restaurantProps.timings}</h3>
-                    <a href="${restaurantProps.menu}" target="_blank">
+                    <h3 class = "input results">${restaurantProps.timings}</h3>
                 </div>
             </div>
-            <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
         </div>
   </li>`
 
@@ -107,6 +126,7 @@ function displayRestaurants(responseJson){
       $("#results-list").hide().fadeIn(1500).append(makeTileHtml(restaurantProps));
     };
     //display the results section  
+    $(".header").removeClass("hidden");
     $("#results").removeClass("hidden");
 };
 
@@ -192,6 +212,8 @@ function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     handleGoButton();
+    // When the user scrolls the page, execute myFunction
+    window.onscroll = function() {handleHeaderScroll()};
   });
 }
 
