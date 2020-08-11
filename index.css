@@ -53,7 +53,6 @@ h2.header-content {
 
 .header-img:hover {
   font-size: larger;
-  font-weight: 700 !important;
   opacity: 0.9;
   cursor: pointer;
 }
@@ -145,21 +144,23 @@ ul, li {
 }
 
 /* Style the result tiles. */
-.wrapper-tile{
+.wrapper-tile {
+  top: 30%;
+  left: 30%;
   width: 70rem;
-  max-width: 45rem;
+  max-width: 85rem;
   background: rgba(0,0,0,0.8);
   padding: 15px;
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
 
-.wrapper-tile .title h1, h2, h3 {
+/* .wrapper-tile .title h1, h2, h3 {
   color: #FCFCF4;
   font-size: 4rem;
   text-align: start;
   margin-bottom: 25px;
-}
+} */
 
 .results {
   font-size: 3rem;
@@ -179,7 +180,7 @@ ul, li {
 }
 
 .tile-fields {
-  width: 78%;
+  width: 98%;
 }
 .tile-fields .input, textarea {
   margin: 10px 0;
@@ -239,7 +240,7 @@ button:hover {
     transition: all 0.3s ease 0s;
 }
 
-@media screen and (max-width: 600px){
+/* @media screen and (max-width: 600px){
 
   img#menu {
     display: flex;
@@ -305,7 +306,7 @@ button:hover {
     background-size: cover;
     width: max-content;
 }
-}
+} */
 
 @media screen and (min-width: 500px){
   img#menu {
@@ -355,7 +356,7 @@ button:hover {
   }
 
   .wrapper-tile{
-    width: 30rem;
+    width: 50rem;
     max-width: 55rem;
     background: rgba(0,0,0,0.8);
     padding: 15px;
