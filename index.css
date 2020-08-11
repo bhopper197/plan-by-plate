@@ -33,6 +33,48 @@ body{
     width: 100%;
 }
 
+/* STYLE THE HEADER */
+.header {
+  padding: 10px 16px;
+  background: #0B0A09;
+  color: #f1f1f1;
+  opacity: 0.97;
+}
+
+h2.header-content {
+  display: flex;
+  justify-content: center;
+  margin: 0;
+}
+
+.header-img {
+  width: 8rem;
+}
+
+.header-img:hover {
+  font-size: larger;
+  font-weight: 700 !important;
+  opacity: 0.9;
+  cursor: pointer;
+}
+
+/* Page content */
+.content {
+  padding: 26px;
+}
+
+/* The sticky class is added to the header with JS when it reaches its scroll position */
+.sticky {
+  position: fixed;
+  top: 0;
+  width: 100%
+}
+
+/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
+.sticky + .content {
+  padding-top: 102px;
+}
+
 /* Style the search container. */
 .wrapper{
   position: absolute;
@@ -137,7 +179,7 @@ ul, li {
 }
 
 .tile-fields {
-  width: 48%;
+  width: 78%;
 }
 .tile-fields .input, textarea {
   margin: 10px 0;
@@ -197,18 +239,34 @@ button:hover {
     transition: all 0.3s ease 0s;
 }
 
-@media screen and (max-width: 400px){
+@media screen and (max-width: 600px){
 
   img#menu {
-    width: 45rem;
+    display: flex;
+    justify-content: center;
+    width: 5rem;
   }
 
   .contact-form{
     flex-direction: row;
   }
 
+  .wrapper {
+    margin-top: 45rem;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 550px;
+    background: rgba(0,0,0,0.8);
+    padding: 60px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+
   .wrapper-tile{
-    width: 100rem;
+    width: 50rem;
     max-width: 95rem;
     background: rgba(0,0,0,0.8);
     padding: 15px;
@@ -232,19 +290,12 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    flex-direction: row;
+    flex-direction: column;
     margin-right: 0;
   }
   
   .tile-fields {
     width: 48%;
-  }
-
-  ul, li {
-    display: flex;
-    justify-content: space-evenly;
-    align-items: center;
-    padding: 10px;
   }
 
   body{
@@ -254,4 +305,85 @@ button:hover {
     background-size: cover;
     width: max-content;
 }
+}
+
+@media screen and (min-width: 500px){
+  img#menu {
+    display: flex;
+    justify-content: center;
+    width: 5rem;
+  }
+
+  .header-content {
+    display: flex;
+    justify-content: flex-start;
+    margin: 0;
+  }
+
+  h2.results {
+    margin-bottom: 1rem;
+    font-size: 3rem;
+  }
+
+  h3.results {
+    font-size: 2rem;
+  }
+
+  h3.input {
+    font-size: 100rem;
+  }
+
+  ul, li {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+    padding: 10px;
+  }
+
+  .wrapper {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    width: 100%;
+    max-width: 750px;
+    background: rgba(0,0,0,0.8);
+    padding: 60px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+
+  .wrapper-tile{
+    width: 30rem;
+    max-width: 55rem;
+    background: rgba(0,0,0,0.8);
+    padding: 15px;
+    border-radius: 5px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.3);
+  }
+
+  .wrapper-tile .title h1, h2, h3 {
+    color: #FCFCF4;
+    font-size: 2rem;
+    text-align: center;
+    margin-bottom: 25px;
+  }
+  
+  .tile-form{
+    display: flex;
+    justify-content: center;
+  }
+  
+  .tile-fields{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-right: 0;
+  }
+  
+  .tile-fields {
+    width: 88%;
+  }
 }
