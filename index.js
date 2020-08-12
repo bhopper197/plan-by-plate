@@ -6,7 +6,7 @@ const url = "https://developers.zomato.com/api/v2.1/search";
 const searchInput = "search-term";
 
 $(function getAutocomplete() {
-  $(".wrapper").hide().fadeIn(3500);
+  $(".wrapper").hide().fadeIn(1500);
 
   var autoComplete = new 
   google.maps.places.Autocomplete((document.getElementById("search-term")), {

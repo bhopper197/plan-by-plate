@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@300&display=swap');
 
-*{
+* {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
@@ -20,22 +20,25 @@ a {
   color: #FCFCF4;
 }
 
-h1, h2, h3, h4{
+h1, h2, h3, h4 {
   color: #FCFCF4; 
 }
 
-body{
-    background: url(images/background.jpg) no-repeat center center fixed; 
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    width: 100%;
+body {
+  background: url(images/background.jpg) no-repeat center center fixed; 
+  -webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+  width: 100%;
 }
 
 /* STYLE THE HEADER */
 .header {
-  padding: 10px 16px;
+  position: fixed;
+  right: 0;
+  left: 0;
+  z-index: 999;
   background: #0B0A09;
   color: #f1f1f1;
   opacity: 0.97;
@@ -43,35 +46,24 @@ body{
 
 h2.header-content {
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
+  align-items: center;
   margin: 0;
+  padding: 1rem;
 }
 
 .header-img {
-  width: 8rem;
+  width: 6.8rem;
 }
 
-.header-img:hover {
+.search-img {
+  width: 6.8rem;
+}
+
+.search-img:hover {
   font-size: larger;
-  opacity: 0.9;
+  opacity: 0.6;
   cursor: pointer;
-}
-
-/* Page content */
-.content {
-  padding: 26px;
-}
-
-/* The sticky class is added to the header with JS when it reaches its scroll position */
-.sticky {
-  position: fixed;
-  top: 0;
-  width: 100%
-}
-
-/* Add some top padding to the page content to prevent sudden quick movement (as the header gets a new position at the top of the page (position:fixed and top:0) */
-.sticky + .content {
-  padding-top: 102px;
 }
 
 /* Style the search container. */
@@ -166,7 +158,7 @@ ul, li {
   font-size: 3rem;
 }
 
-.tile-form{
+.tile-form {
   display: flex;
   justify-content: flex-start;
 }
@@ -240,74 +232,6 @@ button:hover {
     transition: all 0.3s ease 0s;
 }
 
-/* @media screen and (max-width: 600px){
-
-  img#menu {
-    display: flex;
-    justify-content: center;
-    width: 5rem;
-  }
-
-  .contact-form{
-    flex-direction: row;
-  }
-
-  .wrapper {
-    margin-top: 45rem;
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    width: 100%;
-    max-width: 550px;
-    background: rgba(0,0,0,0.8);
-    padding: 60px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  }
-
-  .wrapper-tile{
-    width: 50rem;
-    max-width: 95rem;
-    background: rgba(0,0,0,0.8);
-    padding: 15px;
-    border-radius: 5px;
-    box-shadow: 0 0 10px rgba(0,0,0,0.3);
-  }
-
-  .wrapper-tile .title h1, h2, h3 {
-    color: #FCFCF4;
-    font-size: 5rem;
-    text-align: center;
-    margin-bottom: 25px;
-  }
-  
-  .tile-form{
-    display: flex;
-    justify-content: center;
-  }
-  
-  .tile-fields{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    margin-right: 0;
-  }
-  
-  .tile-fields {
-    width: 48%;
-  }
-
-  body{
-    -webkit-background-size: cover;
-    -moz-background-size: cover;
-    -o-background-size: cover;
-    background-size: cover;
-    width: max-content;
-}
-} */
-
 @media screen and (min-width: 500px){
   img#menu {
     display: flex;
@@ -342,6 +266,10 @@ button:hover {
     padding: 10px;
   }
 
+  ul#results-list {
+    padding-top: 10rem;
+  }
+
   .wrapper {
     position: absolute;
     top: 50%;
@@ -350,7 +278,7 @@ button:hover {
     width: 100%;
     max-width: 750px;
     background: rgba(0,0,0,0.8);
-    padding: 60px;
+    padding: 50px;
     border-radius: 5px;
     box-shadow: 0 0 10px rgba(0,0,0,0.3);
   }
