@@ -60,6 +60,10 @@ h2.header-content {
   width: 6.8rem;
 }
 
+.text-img {
+  width: 18rem;
+}
+
 .search-img:hover {
   font-size: larger;
   opacity: 0.6;
@@ -155,7 +159,7 @@ ul, li {
 } */
 
 .results {
-  font-size: 3rem;
+  font-size: 4rem;
 }
 
 .tile-form {
@@ -236,7 +240,7 @@ button:hover {
   img#menu {
     display: flex;
     justify-content: center;
-    width: 5rem;
+    width: 6.8rem;
   }
 
   .header-content {
@@ -247,15 +251,19 @@ button:hover {
 
   h2.results {
     margin-bottom: 1rem;
-    font-size: 3rem;
+    font-size: 6rem;
+  }
+
+  h3.rating {
+    font-size: 4rem;
   }
 
   h3.results {
     font-size: 2rem;
   }
 
-  h3.input {
-    font-size: 100rem;
+  h3.input.results {
+    font-size: 1.4rem;
   }
 
   ul, li {
