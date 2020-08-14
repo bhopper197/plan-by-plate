@@ -6,7 +6,7 @@ const url = "https://developers.zomato.com/api/v2.1/search";
 const searchInput = "search-term";
 
 $(function getAutocomplete() {
-  $(".wrapper").hide().fadeIn(1500);
+  $(".wrapper").hide(0).fadeIn(1500);
 
   var autoComplete = new 
   google.maps.places.Autocomplete((document.getElementById("search-term")), {
@@ -25,25 +25,6 @@ $(function getAutocomplete() {
   });
 
 
-// When the user scrolls the page, execute myFunction
-// window.onscroll = function() {handleHeaderScroll()};
-
-// Add the sticky class to the header when you reach its scroll position. Remove "sticky" when you leave the scroll position
-function handleHeaderScroll() {
-// Get the header
-var header = document.getElementById("myHeader");
-
-// Get the offset position of the navbar
-var sticky = header.offsetTop;
-
-  if (window.pageYOffset > sticky) {
-    header.classList.add("sticky");
-  } else {
-    header.classList.remove("sticky");
-  }
-}
-
-
 function handleGoButton(){
   $( "#search" ).click(function() {
     $( ".wrapper" ).fadeOut(1500);
@@ -57,7 +38,7 @@ function handleGoButton(){
       q: cuisine, // Pass in the user query string.
       lat: latitude, // Pass in the lat from the autocomplete.
       lon: longitude, // Pass in the lng from the autocomplete.
-      count: 5, // Limit results to 10 at a time.
+      count: 5, // Limit results to 5 at a time.
     };
 
     let output = getRestaurants(params);
@@ -77,15 +58,15 @@ function makeTileHtml(restaurantProps){
             <div class="tile-form">
                 <div class="tile-fields">
                     <h2 class = "results">${restaurantProps.name}</h2>
+                    <h3 class = "rating">${restaurantProps.user_rating} / 5 Stars</h2>
                     <a href="${restaurantProps.menu}" target="_blank">
                     <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
-                    <h3 class = "input">${restaurantProps.user_rating} / 5 Stars</h2>
                     <h3 class = "input results"> 
                     Average cost for two: 
                     ${restaurantProps.currency}
                     ${restaurantProps.cost}
                     </h3>
-                    <h3 class = "input results">${restaurantProps.timings}</h3>
+                    <h3 class = "input results">${restaurantProps.type}</h3>
                 </div>
             </div>
         </div>
@@ -120,10 +101,15 @@ function displayRestaurants(responseJson){
         responseJson.restaurants[i].restaurant.average_cost_for_two,
 
         currency:
-        responseJson.restaurants[i].restaurant.currency
+        responseJson.restaurants[i].restaurant.currency,
+
+        type:
+        responseJson.restaurants[i].restaurant.establishment
+
       };
 
       $("#results-list").hide().fadeIn(1500).append(makeTileHtml(restaurantProps));
+      $(".header").hide().slideDown(1500);
     };
     //display the results section  
     $(".header").removeClass("hidden");

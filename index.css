@@ -110,25 +110,25 @@ h2.header-content {
 .input-fields .input, textarea {
   margin: 10px 0;
   background: transparent;
-  border: 0px;
-  border-bottom: 2px solid #FCFCF4;
+  border: 1.5px solid #FCFCF4;
+  border-radius: 0.8rem;
   padding: 10px;
   color: #FCFCF4;
-  font-size: 1.2rem;
+  font-size: 1.4rem;
   width: 100%;
 }
 
 ::-webkit-input-placeholder {
   /* Chrome/Opera/Safari */
-  color: rgb(116, 116, 116);
+  color: rgb(167, 164, 164);
 }
 ::-moz-placeholder {
   /* Firefox 19+ */
-  color: rgb(116, 116, 116);
+  color: rgb(167, 164, 164);
 }
 :-ms-input-placeholder {
   /* IE 10+ */
-  color: rgb(116, 116, 116);
+  color: rgb(167, 164, 164);
 }
 
 ul, li {
@@ -150,13 +150,6 @@ ul, li {
   border-radius: 5px;
   box-shadow: 0 0 10px rgba(0,0,0,0.3);
 }
-
-/* .wrapper-tile .title h1, h2, h3 {
-  color: #FCFCF4;
-  font-size: 4rem;
-  text-align: start;
-  margin-bottom: 25px;
-} */
 
 .results {
   font-size: 4rem;
@@ -213,6 +206,7 @@ a {
 button {
     color: #FCFCF4 !important;
     text-transform: uppercase;
+    font-size: 1rem;
     background: #ECA547;
     padding: 10px;
     border: 2px solid #ECA547 !important;
@@ -220,7 +214,7 @@ button {
     display: flex;
     justify-content: center;
     text-align: center;
-    width: 6rem;
+    width: 8rem;
     transition: all 0.3s ease 0s;
 }
 button:hover {
@@ -252,6 +246,8 @@ button:hover {
   h2.results {
     margin-bottom: 1rem;
     font-size: 6rem;
+    border-bottom: 4px solid #FCFCF4;
+    border-radius: 0.5rem;
   }
 
   h3.rating {
