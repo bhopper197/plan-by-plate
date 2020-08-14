@@ -2,7 +2,7 @@
 
 ![api](readme-images/api.png)
 
-# Below is an example of the API's that are used in this app talk to each other.
+## Below is an small example of how the API's talk to each other. And how the data is passed from one to other.
 
 ![code-example](readme-images/code.png)
 
