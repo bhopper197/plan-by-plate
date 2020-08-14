@@ -41,8 +41,7 @@ function handleGoButton(){
       count: 5, // Limit results to 5 at a time.
     };
 
-    let output = getRestaurants(params);
-    console.log(output);
+    return getRestaurants(params);
   });
 };
 
