@@ -32,6 +32,9 @@ $(function getAutocomplete() {
 #### Below is an example of how that information is passed into our Zomato API call.
 ![code-example](readme-images/code.png)
 
+#### In reference to the Zomato API, the /search endpoint is being used. Below is a link to the documentation.
+### <a href="https://developers.zomato.com/documentation">Zomato API</a>
+
 ![tech-used](readme-images/tech.png)
 
 ![end-summary](readme-images/summary.png)
