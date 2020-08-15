@@ -31,6 +31,10 @@ function handleGoButton(){
     const latitude = $("#latitude-input").val();
     const longitude = $("#longitude-input").val();
     const cuisine = $("#cuisine").val();
+
+    if (cuisine === ""){
+      throw new Error("Please fill out the cuisine field.")
+    };
   
     var params = {
       userKey: apiKey,
@@ -43,11 +47,6 @@ function handleGoButton(){
 
     return getRestaurants(params);
   });
-};
-
-function testMakeTileHtml(){
-  let html = makeTileHtml(restaurantProps);
-  return html;
 };
 
 function makeTileHtml(restaurantProps){
@@ -78,7 +77,7 @@ function displayRestaurants(responseJson){
     console.log(responseJson);
     // Empty out any prior results.
     $("#results-list").empty();
-
+    // Iterate over the array of restaurants to gather the data to display to the user.
     for (let i = 0; i < responseJson.restaurants.length; i++){
       var restaurantProps = {
         name: 
@@ -115,32 +114,30 @@ function displayRestaurants(responseJson){
     $("#results").removeClass("hidden");
 };
 
-function updateDOM(){};
-
 function formatQueryParams(params) {
   const queryItems = Object.keys(params)
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
   return queryItems.join('&');
 }
 
-function testGetRestaurants(){
-  const latitude = $("#latitude-input").val();
-  const longitude = $("#longitude-input").val();
-  const cuisine = $("#cuisine").val();
+// function testGetRestaurants(){
+//   const latitude = $("#latitude-input").val();
+//   const longitude = $("#longitude-input").val();
+//   const cuisine = $("#cuisine").val();
 
-  var params = {
-    userKey: apiKey,
-    url: url,
-    q: cuisine, // Pass in the user query string.
-    lat: latitude, // Pass in the lat from the autocomplete.
-    lon: longitude, // Pass in the lng from the autocomplete.
-    count: 5, // Limit results to 10 at a time.
-  };
+//   var params = {
+//     userKey: apiKey,
+//     url: url,
+//     q: cuisine, 
+//     lat: latitude, 
+//     lon: longitude,
+//     count: 5, 
+//   };
 
-  let output = getRestaurants(params);
+//   let output = getRestaurants(params);
 
-  console.log(output);
-};
+//   console.log(output);
+// };
 
 function getRestaurantProps(responseJson){
   for (let i = 0; i < responseJson.restaurants.length; i++){
@@ -148,14 +145,26 @@ function getRestaurantProps(responseJson){
       name: 
       responseJson.restaurants[i].restaurant.name,
       
-      cuisines: 
-      responseJson.restaurants[i].restaurant.establishment,
+      timings: 
+      responseJson.restaurants[i].restaurant.timings,
 
       user_rating: 
       responseJson.restaurants[i].restaurant.user_rating.aggregate_rating,
 
-      highlights: 
-      responseJson.restaurants[i].restaurant.highlights
+      menu:
+      responseJson.restaurants[i].restaurant.menu_url,
+
+      image:
+      responseJson.restaurants[i].restaurant.featured_image,
+
+      cost:
+      responseJson.restaurants[i].restaurant.average_cost_for_two,
+
+      currency:
+      responseJson.restaurants[i].restaurant.currency,
+
+      type:
+      responseJson.restaurants[i].restaurant.establishment
     };
   };
   return restaurantProps;
@@ -197,8 +206,6 @@ function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
     handleGoButton();
-    // When the user scrolls the page, execute myFunction
-    window.onscroll = function() {handleHeaderScroll()};
   });
 }
 
