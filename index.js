@@ -24,18 +24,24 @@ $(function getAutocomplete() {
     });
   });
 
+  let globalEvent = {};
 
-function handleGoButton(){
-  $( "#search" ).click(function() {
+function handleBackButton(event){
+  $( "#back" ).click(function() {
+    $("#search-term cuisine").empty();
+    $(".header").slideUp(1500);
+    $("#results-list").fadeOut(1500);
+    $( ".wrapper" ).fadeIn(3000);
+  });
+};
+
+function onSearchSubmit(event){
     $( ".wrapper" ).fadeOut(1500);
     const latitude = $("#latitude-input").val();
     const longitude = $("#longitude-input").val();
     const cuisine = $("#cuisine").val();
 
-    if (cuisine === ""){
-      throw new Error("Please fill out the cuisine field.")
-    };
-  
+    globalEvent = event;
     var params = {
       userKey: apiKey,
       url: url,
@@ -46,7 +52,6 @@ function handleGoButton(){
     };
 
     return getRestaurants(params);
-  });
 };
 
 function makeTileHtml(restaurantProps){
@@ -196,7 +201,6 @@ function getRestaurants(params) {
       throw new Error(response.statusText);
     })
     .then(responseJson => displayRestaurants(responseJson))
-    .then(responseJson => console.log(responseJson))
     .catch(err => {
       $('#js-error-message').text(`Something went wrong: ${err.message}`);
     });
@@ -205,8 +209,10 @@ function getRestaurants(params) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    handleGoButton();
+    console.log(event)
+    onSearchSubmit(event);
+    handleBackButton(event);
   });
-}
+};
 
 $(watchForm);
