@@ -7,6 +7,7 @@
   outline: none;
   font-family: 'Cormorant Garamond', serif;
 }
+
 img {
     width: 25rem;
     padding-bottom: 0;
@@ -65,12 +66,22 @@ h2.header-content {
 }
 
 button#back{
-  background: #0B0A09;
-  border-radius: 80%;
+  background: none;
+  border: none;
 }
 button#back:hover {
   font-size: large;
   opacity: 0.6;
+  cursor: pointer;
+}
+
+button#plates{
+  background: none;
+  border: none;
+}
+button#plates:hover {
+  font-size: large;
+  opacity: 0.8;
   cursor: pointer;
 }
 
@@ -208,10 +219,9 @@ a {
   align-items: center;
 }
 button#search {
-  margin-top: 4px;
     color: #FCFCF4 !important;
     text-transform: uppercase;
-    font-size: 2rem;
+    font-size: 1.7rem;
     background: #ECA547;
     padding: 10px;
     border: 2px solid #ECA547 !important;
@@ -233,6 +243,33 @@ button#search:hover {
     box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
     transition: all 0.3s ease 0s;
+}
+
+button#add {
+  color: #FCFCF4 !important;
+  text-transform: uppercase;
+  font-size: 1.7rem;
+  background: #ECA547;
+  padding: 10px;
+  border: 2px solid #ECA547 !important;
+  border-radius: 6px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  width: 100%;
+  transition: all 0.3s ease 0s;
+}
+button#add:hover {
+  color: #ffffff !important;
+  font-size: large;
+  font-weight: 700 !important;
+  letter-spacing: 2px;
+  background: none;
+  cursor: pointer;
+  -webkit-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  -moz-box-shadow: 0px 5px 40px -10px rgba(0,0,0,0.57);
+  transition: all 0.3s ease 0s;
 }
 
 @media all and (min-width: 500px){
