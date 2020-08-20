@@ -24,11 +24,36 @@ $(function getAutocomplete() {
     });
   });
 
-  let globalEvent = {};
+function handleAddButton(event){
+  $( "#add" ).click(function() {
+    setPlates(responseJson);
+  });
+};
+
+function setPlates(responseJson){
+  localStorage.setItem("1.", responseJson.restaurants.name);
+};
+
+function getPlates(){};
+
+function makePlatesHtml(restaurantProps){
+  const plateHtml = 
+  `<div id="plates"></div>`
+};
+
+function displayPlates(responseJson){
+  
+};
+
+// This function clears out user prior search input
+function clearInputFields(elementId){
+  document.getElementById("search-term").value = "";
+  document.getElementById("cuisine").value = "";
+};
 
 function handleBackButton(event){
   $( "#back" ).click(function() {
-    $("#search-term cuisine").empty();
+    clearInputFields();
     $(".header").slideUp(1500);
     $("#results-list").fadeOut(1500);
     $( ".wrapper" ).fadeIn(3000);
@@ -41,7 +66,6 @@ function onSearchSubmit(event){
     const longitude = $("#longitude-input").val();
     const cuisine = $("#cuisine").val();
 
-    globalEvent = event;
     var params = {
       userKey: apiKey,
       url: url,
@@ -60,7 +84,7 @@ function makeTileHtml(restaurantProps){
       <div class ="wrapper-tile">
             <div class="tile-form">
                 <div class="tile-fields">
-                    <h2 class = "results">${restaurantProps.name}</h2>
+                    <h2 id="name" class = "results">${restaurantProps.name}</h2>
                     <h3 class = "rating">${restaurantProps.user_rating} / 5 Stars</h2>
                     <a href="${restaurantProps.menu}" target="_blank">
                     <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
@@ -70,6 +94,8 @@ function makeTileHtml(restaurantProps){
                     ${restaurantProps.cost}
                     </h3>
                     <h3 class = "input results">${restaurantProps.type}</h3>
+                    <h3 class = "input results">${restaurantProps.address}<br>${restaurantProps.city}</h3>
+                    <button id="add" type="submit" id="search">Add to Plates</button>
                 </div>
             </div>
         </div>
@@ -77,6 +103,8 @@ function makeTileHtml(restaurantProps){
 
 return tileHtml;
 };
+
+
 
 function displayRestaurants(responseJson){
     console.log(responseJson);
@@ -107,7 +135,13 @@ function displayRestaurants(responseJson){
         responseJson.restaurants[i].restaurant.currency,
 
         type:
-        responseJson.restaurants[i].restaurant.establishment
+        responseJson.restaurants[i].restaurant.establishment,
+        
+        address:
+        responseJson.restaurants[i].restaurant.location.address,
+
+        city:
+        responseJson.restaurants[i].restaurant.location.city
 
       };
 
@@ -124,25 +158,6 @@ function formatQueryParams(params) {
     .map(key => `${encodeURIComponent(key)}=${encodeURIComponent(params[key])}`)
   return queryItems.join('&');
 }
-
-// function testGetRestaurants(){
-//   const latitude = $("#latitude-input").val();
-//   const longitude = $("#longitude-input").val();
-//   const cuisine = $("#cuisine").val();
-
-//   var params = {
-//     userKey: apiKey,
-//     url: url,
-//     q: cuisine, 
-//     lat: latitude, 
-//     lon: longitude,
-//     count: 5, 
-//   };
-
-//   let output = getRestaurants(params);
-
-//   console.log(output);
-// };
 
 function getRestaurantProps(responseJson){
   for (let i = 0; i < responseJson.restaurants.length; i++){
@@ -209,7 +224,6 @@ function getRestaurants(params) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
-    console.log(event)
     onSearchSubmit(event);
     handleBackButton(event);
   });
