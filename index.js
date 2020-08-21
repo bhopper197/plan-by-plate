@@ -24,26 +24,25 @@ $(function getAutocomplete() {
     });
   });
 
-function handleAddButton(event){
+
+function handleAddButton(){
   $( "#add" ).click(function() {
-    setPlates(responseJson);
+    savePlate();
   });
 };
 
-function setPlates(responseJson){
+function savePlate(){
   localStorage.setItem("1.", responseJson.restaurants.name);
 };
 
-function getPlates(){};
+function loadPlates(){};
 
 function makePlatesHtml(restaurantProps){
   const plateHtml = 
   `<div id="plates"></div>`
 };
 
-function displayPlates(responseJson){
-  
-};
+function displayPlates(){};
 
 // This function clears out user prior search input
 function clearInputFields(elementId){
@@ -95,7 +94,7 @@ function makeTileHtml(restaurantProps){
                     </h3>
                     <h3 class = "input results">${restaurantProps.type}</h3>
                     <h3 class = "input results">${restaurantProps.address}<br>${restaurantProps.city}</h3>
-                    <button id="add" type="submit" id="search">Add to Plates</button>
+                    <button id="add" type="button">Add to Plates</button>
                 </div>
             </div>
         </div>
@@ -226,6 +225,7 @@ function watchForm() {
     event.preventDefault();
     onSearchSubmit(event);
     handleBackButton(event);
+    handleAddButton();
   });
 };
 
