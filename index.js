@@ -24,15 +24,75 @@ $(function getAutocomplete() {
     });
   });
 
+function toggleModal() {
+  var modal = document.querySelector(".modal");
+  var closeButton = document.querySelector(".close-button");
 
-function handleAddButton(){
-  $( "#add" ).click(function() {
-    savePlate();
-  });
+  modal.classList.toggle("show-modal");
+  closeButton.addEventListener("click", toggleModal);
 };
 
-function savePlate(){
-  localStorage.setItem("1.", responseJson.restaurants.name);
+
+// Modal Functions.
+function setPlate(responseJson){
+
+  // Value of buttons = HTMLCollection(5) 
+  // [button.add, button.add, button.add, button.add, button.add].
+  let buttons = document.getElementsByClassName("add");
+  console.log(buttons);
+
+  buttons[0].addEventListener("click", getPlate, true);
+  // Value of list = [h2.name, h2.name, h2.name, h2.name, h2.name]
+  let list = document.getElementsByClassName("name");
+  console.log(list[0].innerHTML);
+
+  let restaurant = list[0].innerHTML;
+  plates.r1 = localStorage.setItem("restaurant", restaurant);
+};
+
+function getPlate(localStorage){
+  console.log("testing")
+};
+
+// Plates argument is an object. 
+function displayPlates(plates){
+  console.log(localStorage);
+  $("#name--1").html(plates.r1);
+  $("#results-list").fadeOut(1000)
+  $( "#your-plates").slideDown(2500);
+  $( "#your-plates" ).removeClass("hidden");
+};
+
+// Because handleLoadPlates() is only called from the results state.
+// We can safely call displayPlates.
+function handleLoadPlates(event){
+  let plates = {};
+  plates.r1 = localStorage.restaurant;
+  displayPlates(plates);
+};
+
+function handleAddButton(event){
+  setPlate(plates);
+  toggleModal();
+};
+
+function handleBackToResults(event){
+  $("#results-list").fadeIn(1000)
+  $( "#your-plates").slideUp(2500);
+};
+
+// We need to set an event listener that knows which button is pressed.
+// And then attach that button press to the restaurant name that was selected.
+function setAddButton(){
+  $( ".add" ).on("click", handleAddButton);
+};
+
+function setPlatesButton(event){
+  $( "#plates" ).on("click", handleLoadPlates);
+};
+
+function setBackToResultsButton(event){
+  $( "#back-to-results" ).click(handleBackToResults)
 };
 
 function loadPlates(){};
@@ -41,8 +101,6 @@ function makePlatesHtml(restaurantProps){
   const plateHtml = 
   `<div id="plates"></div>`
 };
-
-function displayPlates(){};
 
 // This function clears out user prior search input
 function clearInputFields(elementId){
@@ -53,14 +111,15 @@ function clearInputFields(elementId){
 function handleBackButton(event){
   $( "#back" ).click(function() {
     clearInputFields();
+    $( "#your-plates").fadeOut(1500)
     $(".header").slideUp(1500);
-    $("#results-list").fadeOut(1500);
-    $( ".wrapper" ).fadeIn(3000);
+    $("#results-list").fadeOut(1000)
+    $( ".wrapper" ).fadeIn(2000);
   });
 };
 
 function onSearchSubmit(event){
-    $( ".wrapper" ).fadeOut(1500);
+    $( ".wrapper" ).slideUp(1500);
     const latitude = $("#latitude-input").val();
     const longitude = $("#longitude-input").val();
     const cuisine = $("#cuisine").val();
@@ -79,31 +138,40 @@ function onSearchSubmit(event){
 
 function makeTileHtml(restaurantProps){
   const tileHtml =
-  `<li>
-      <div class ="wrapper-tile">
-            <div class="tile-form">
-                <div class="tile-fields">
-                    <h2 id="name" class = "results">${restaurantProps.name}</h2>
-                    <h3 class = "rating">${restaurantProps.user_rating} / 5 Stars</h2>
-                    <a href="${restaurantProps.menu}" target="_blank">
-                    <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
-                    <h3 class = "input results"> 
-                    Average cost for two: 
-                    ${restaurantProps.currency}
-                    ${restaurantProps.cost}
-                    </h3>
-                    <h3 class = "input results">${restaurantProps.type}</h3>
-                    <h3 class = "input results">${restaurantProps.address}<br>${restaurantProps.city}</h3>
-                    <button id="add" type="button">Add to Plates</button>
+  `<section>
+      <li>
+          <div class ="wrapper-tile">
+                <div class="tile-form">
+                    <div class="tile-fields">
+                        <h2 class="name">${restaurantProps.name}</h2>
+                        <h3 class = "rating">${restaurantProps.user_rating} / 5 Stars</h2>
+                        <a href="${restaurantProps.menu}" target="_blank">
+                        <img id = "menu" src="images/menu.png" alt="Menu-link"></a>
+                        <h3 class = "input results"> 
+                        Average cost for two: 
+                        ${restaurantProps.currency}
+                        ${restaurantProps.cost}
+                        </h3>
+                        <h3 class = "input results">${restaurantProps.type}</h3>
+                        <h3 class = "input results">${restaurantProps.address}<br>${restaurantProps.city}</h3>
+                        <button class="add">Add to Plates</button>
+                    </div>
                 </div>
             </div>
-        </div>
-  </li>`
+      </li>
+    </section>`
 
 return tileHtml;
 };
 
-
+function makeErrorMessage(msg){
+  const errorHtml = 
+  `<div class="wrapper hidden">
+      <h3>No results, Please return to search</h3>
+   </div>`
+  
+  return errorHtml;
+};
 
 function displayRestaurants(responseJson){
     console.log(responseJson);
@@ -143,13 +211,16 @@ function displayRestaurants(responseJson){
         responseJson.restaurants[i].restaurant.location.city
 
       };
-
-      $("#results-list").hide().fadeIn(1500).append(makeTileHtml(restaurantProps));
-      $(".header").hide().slideDown(1500);
+      
+      $("#results-list").hide().fadeIn(1000).append(makeTileHtml(restaurantProps));
+      $(".header").hide().slideDown(1000);
     };
+    // Listen for the user to add a restaurant. 
+    setAddButton();
     //display the results section  
     $(".header").removeClass("hidden");
     $("#results").removeClass("hidden");
+    popUpBox(ele);
 };
 
 function formatQueryParams(params) {
@@ -204,12 +275,11 @@ function getRestaurants(params) {
   const queryString = formatQueryParams(params)
   const url = searchURL + '?' + queryString;
 
-  console.log(url);
-
 
   fetch(url, options)
     .then(response => {
       if (response.ok) {
+        console.log(response)
         return response.json();
       }
       throw new Error(response.statusText);
@@ -225,7 +295,8 @@ function watchForm() {
     event.preventDefault();
     onSearchSubmit(event);
     handleBackButton(event);
-    handleAddButton();
+    setPlatesButton(event);
+    setBackToResultsButton(event);
   });
 };
 
