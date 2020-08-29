@@ -11,7 +11,7 @@
     <h2 class="header-content">
         <img class= "header-img" src="images/header.png" alt="Go back to search button">
         <button id="plates">
-            <img class="text-img" src="images/logo-text.png" alt="Plan By Plate">
+            <img class="text-img" src="images/logo-text.png" alt="Your Plates">
         </button>
         <button id="back">
             <img class="search-img" src="images/back-to-search.png" alt="Back to search">
@@ -38,7 +38,35 @@
             </form>
         </div>
     </div>
+
+    <div class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h1 class="added--msg">Added to Your Plates</h1>
+        </div>
+    </div>
 </body>
+
+    <!-- Plates Container -->
+    <section id="your-plates" class="hidden">
+        <ul id="plates-list">
+            <li>
+                <div class ="wrapper-tile">
+                      <div class="tile-form">
+                          <div class="tile-fields">
+                              <h2 id="name--1" class = "results"></h2>
+                              <h2 id="name--2" class = "results"></h2>
+                              <h2 id="name--3" class = "results"></h2>
+                              <h2 id="name--4" class = "results"></h2>
+                              <h2 id="name--5" class = "results"></h2>
+                              <button id="back-to-results">Back to Results</button>
+                          </div>
+                      </div>
+                </div>
+            </li>
+        </ul>
+    </section>
+
 <!-- jQuery library. -->
 <script src="https://unpkg.com/jquery" crossorigin="anonymous"></script>
 
