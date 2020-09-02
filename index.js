@@ -8,6 +8,8 @@ const searchInput = "search-term";
 $(function getAutocomplete() {
   $(".wrapper").hide(0).fadeIn(1500);
 
+  // The Google Maps API's use Vanilla JavaScript in the example
+  // of accessing the autocomplete function.
   var autoComplete = new 
   google.maps.places.Autocomplete((document.getElementById("search-term")), {
     types: ['geocode']
@@ -33,32 +35,14 @@ function toggleModal() {
 };
 
 
-// Modal Functions.
-function setPlate(responseJson){
-
-  // Value of buttons = HTMLCollection(5) 
-  // [button.add, button.add, button.add, button.add, button.add].
-  let buttons = document.getElementsByClassName("add");
-  console.log(buttons);
-
-  buttons[0].addEventListener("click", getPlate, true);
-  // Value of list = [h2.name, h2.name, h2.name, h2.name, h2.name]
-  let list = document.getElementsByClassName("name");
-  console.log(list[0].innerHTML);
-
-  let restaurant = list[0].innerHTML;
-  plates.r1 = localStorage.setItem("restaurant", restaurant);
-};
-
 function getPlate(localStorage){
-  console.log("testing")
 };
 
 // Plates argument is an object. 
-function displayPlates(plates){
-  console.log(localStorage);
-  $("#name--1").html(plates.r1);
-  $("#results-list").fadeOut(1000)
+function displayPlates(platesProps){
+  // console.log(localStorage);
+  $("#name--1").html(platesProps);
+  $("#results-list").fadeOut(1000);
   $( "#your-plates").slideDown(2500);
   $( "#your-plates" ).removeClass("hidden");
 };
@@ -66,13 +50,35 @@ function displayPlates(plates){
 // Because handleLoadPlates() is only called from the results state.
 // We can safely call displayPlates.
 function handleLoadPlates(event){
-  let plates = {};
-  plates.r1 = localStorage.restaurant;
+  let plates = [];
+  plates = localStorage.getItem("plates");
   displayPlates(plates);
 };
 
 function handleAddButton(event){
-  setPlate(plates);
+  // handlePlates(plates);
+  console.clear();
+  console.log(event);
+  let restaurant = event.currentTarget.id;
+  let plates = localStorage.getItem("plates");
+  
+  plates = JSON.parse(plates);
+  // IF the length of plates is less then 5 add to it;
+  // IF the length is equals MAX replace the 0 index item;
+  // Need to keep track of currentIndex;
+  // index = currentIndex + 1 % max;
+
+  const MAX_INDEX = 5;
+  let index = 0;
+
+  if (plates.length < MAX_INDEX){
+    plates.push(restaurant);
+    localStorage.setItem("plates", JSON.stringify(plates));
+  } else {
+    plates.splice(index, 1, restaurant)
+    localStorage.setItem("plates", JSON.stringify(plates));
+  }
+  console.log(localStorage);
   toggleModal();
 };
 
@@ -154,7 +160,7 @@ function makeTileHtml(restaurantProps){
                         </h3>
                         <h3 class = "input results">${restaurantProps.type}</h3>
                         <h3 class = "input results">${restaurantProps.address}<br>${restaurantProps.city}</h3>
-                        <button class="add">Add to Plates</button>
+                        <button class="add" id="${restaurantProps.name}">Add to Plates</button>
                     </div>
                 </div>
             </div>
@@ -279,7 +285,6 @@ function getRestaurants(params) {
   fetch(url, options)
     .then(response => {
       if (response.ok) {
-        console.log(response)
         return response.json();
       }
       throw new Error(response.statusText);
@@ -293,6 +298,7 @@ function getRestaurants(params) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
+    localStorage.setItem("plates", JSON.stringify([]));
     onSearchSubmit(event);
     handleBackButton(event);
     setPlatesButton(event);
