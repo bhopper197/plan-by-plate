@@ -64,7 +64,11 @@ h2.header-content {
 .text-img {
   width: 18rem;
 }
-
+button:focus {
+  background: #0B0A09;
+  transform: scale(1.2);
+  border: 2px solid #ffffff;
+}
 button#back{
   background: none;
   border: none;
