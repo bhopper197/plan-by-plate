@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-	<meta charset="UTF-8">
+	<meta charset="UTF-8" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>Plan By Plate</title>
     <link rel="stylesheet" href="index.css">
     <link rel="icon" type="image/png" href="images/favicon.png"/>
@@ -20,10 +20,19 @@
 </div>
 
 <body>
+    <!-- ERROR MESSAGE -->
+    <section id="error" class="hidden">
+        <ul id="error-message">
+        </ul>
+    </section>
+
+    <!-- SEARCH RESULTS -->
     <section id="results" class="hidden">
         <ul id="results-list">
         </ul>
     </section>
+
+    <!-- SEARCH INPUT -->
     <div class="wrapper hidden">
         <div class="title">
             <h2><img id="logo" src="images/logo.png" alt="logo"></h2>
@@ -39,6 +48,7 @@
         </div>
     </div>
 
+    <!-- ADDED TO PLATES POPUP BOX -->
     <div class="modal">
         <div class="modal-content">
             <span class="close-button">&times;</span>
@@ -47,15 +57,14 @@
     </div>
 </body>
 
-    <!-- Plates Container -->
+    <!-- YOUR PLATES -->
     <section id="your-plates" class="hidden">
         <ul id="plates-list">
             <li>
                 <div class ="wrapper-tile">
                       <div class="tile-form">
                           <div class="tile-fields">
-                              <ul id="name">
-                              </ul>
+                              <h2 id="name"></h2>
                               <button id="back-to-results">Back to Results</button>
                           </div>
                       </div>
