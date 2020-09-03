@@ -26,7 +26,7 @@ $(function getAutocomplete() {
     });
   });
 
-function toggleModal() {
+function toggleModal(event) {
   var modal = document.querySelector(".modal");
   var closeButton = document.querySelector(".close-button");
 
@@ -38,10 +38,19 @@ function toggleModal() {
 function getPlate(localStorage){
 };
 
+function appendPlates(plates){
+  Object.assign({}, plates)
+  for (let i = 0; i < plates.length; i++){
+    let yourPlates = {restaurant: plates[i]};
+    if (plates.length > 0){
+      $("#name").append(yourPlates.restaurant);
+    };
+  };
+};
+
 // Plates argument is an object. 
-function displayPlates(platesProps){
-  // console.log(localStorage);
-  $("#name--1").html(platesProps);
+function displayPlates(plates){
+  appendPlates(plates);
   $("#results-list").fadeOut(1000);
   $( "#your-plates").slideDown(2500);
   $( "#your-plates" ).removeClass("hidden");
@@ -52,6 +61,7 @@ function displayPlates(platesProps){
 function handleLoadPlates(event){
   let plates = [];
   plates = localStorage.getItem("plates");
+  JSON.parse(plates);
   displayPlates(plates);
 };
 
@@ -63,19 +73,18 @@ function handleAddButton(event){
   let plates = localStorage.getItem("plates");
   
   plates = JSON.parse(plates);
-  // IF the length of plates is less then 5 add to it;
-  // IF the length is equals MAX replace the 0 index item;
-  // Need to keep track of currentIndex;
-  // index = currentIndex + 1 % max;
 
   const MAX_INDEX = 5;
   let index = 0;
 
   if (plates.length < MAX_INDEX){
-    plates.push(restaurant);
+    plates.unshift(restaurant);
     localStorage.setItem("plates", JSON.stringify(plates));
-  } else {
-    plates.splice(index, 1, restaurant)
+  } else if (plates.length === MAX_INDEX){
+    // Push new restaurant into plates.
+    plates.unshift(restaurant);
+    // Delete oldest item plates.
+    plates.splice(-1, 1);
     localStorage.setItem("plates", JSON.stringify(plates));
   }
   console.log(localStorage);
@@ -105,7 +114,11 @@ function loadPlates(){};
 
 function makePlatesHtml(restaurantProps){
   const plateHtml = 
-  `<div id="plates"></div>`
+  `<li>
+    <h2 id="name" class = "results"></h2>
+  </li>`
+
+  return plateHtml;
 };
 
 // This function clears out user prior search input
@@ -298,6 +311,9 @@ function getRestaurants(params) {
 function watchForm() {
   $('form').submit(event => {
     event.preventDefault();
+    // TO DO: When the user goes back to search.
+    // Plates is reset to an empty array. 
+    // Deleting the users saved restaurants.
     localStorage.setItem("plates", JSON.stringify([]));
     onSearchSubmit(event);
     handleBackButton(event);
