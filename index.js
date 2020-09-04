@@ -39,17 +39,16 @@ function getPlate(localStorage){
 };
 
 function appendPlates(plates){
-  Object.assign({}, plates)
   for (let i = 0; i < plates.length; i++){
-    let yourPlates = {restaurant: plates[i]};
     if (plates.length > 0){
-      $("#name").append(yourPlates.restaurant);
+      $("#name").append(plates[i]);
     };
   };
 };
 
 // Plates argument is an object. 
 function displayPlates(plates){
+  console.log(plates);
   appendPlates(plates);
   $("#results-list").fadeOut(1000);
   $( "#your-plates").slideDown(2500);
@@ -75,15 +74,15 @@ function handleAddButton(event){
   plates = JSON.parse(plates);
 
   const MAX_INDEX = 5;
-  let index = 0;
 
   if (plates.length < MAX_INDEX){
+    // Push new restaurant to beginning of array.
     plates.unshift(restaurant);
     localStorage.setItem("plates", JSON.stringify(plates));
   } else if (plates.length === MAX_INDEX){
-    // Push new restaurant into plates.
+    // Still push new restaurant into beginning of array.
     plates.unshift(restaurant);
-    // Delete oldest item plates.
+    // But since the array length is at its max, delete oldest item in plates.
     plates.splice(-1, 1);
     localStorage.setItem("plates", JSON.stringify(plates));
   }
@@ -112,15 +111,6 @@ function setBackToResultsButton(event){
 
 function loadPlates(){};
 
-function makePlatesHtml(restaurantProps){
-  const plateHtml = 
-  `<li>
-    <h2 id="name" class = "results"></h2>
-  </li>`
-
-  return plateHtml;
-};
-
 // This function clears out user prior search input
 function clearInputFields(elementId){
   document.getElementById("search-term").value = "";
@@ -132,7 +122,8 @@ function handleBackButton(event){
     clearInputFields();
     $( "#your-plates").fadeOut(1500)
     $(".header").slideUp(1500);
-    $("#results-list").fadeOut(1000)
+    $("#results-list").fadeOut(1000);
+    $("#error").fadeOut(1000);
     $( ".wrapper" ).fadeIn(2000);
   });
 };
@@ -185,10 +176,10 @@ return tileHtml;
 
 function makeErrorMessage(msg){
   const errorHtml = 
-  `<div class="wrapper hidden">
+  `<div id="message" class="wrapper">
       <h3>No results, Please return to search</h3>
    </div>`
-  
+
   return errorHtml;
 };
 
@@ -239,7 +230,6 @@ function displayRestaurants(responseJson){
     //display the results section  
     $(".header").removeClass("hidden");
     $("#results").removeClass("hidden");
-    popUpBox(ele);
 };
 
 function formatQueryParams(params) {
@@ -302,10 +292,17 @@ function getRestaurants(params) {
       }
       throw new Error(response.statusText);
     })
-    .then(responseJson => displayRestaurants(responseJson))
-    .catch(err => {
-      $('#js-error-message').text(`Something went wrong: ${err.message}`);
-    });
+    .then((responseJson) => displayRestaurants(responseJson))
+    .then(responseJson => console.log(responseJson))
+    // .then(responseJson => {
+    //   if(responseJson === null){
+    //     $("#error").removeClass("hidden");
+    //     $('#error-message').hide().fadeIn(1000).append(makeErrorMessage);
+    //   }
+    // });
+    // .catch(err => {
+    //   $('#error-message').hide().fadeIn(1000).append(makeErrorMessage);
+    // });
 }
 
 function watchForm() {
