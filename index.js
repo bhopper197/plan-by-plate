@@ -38,41 +38,44 @@ function toggleModal(event) {
 function getPlate(localStorage){
 };
 
-function appendPlates(plates){
-  for (let i = 0; i < plates.length; i++){
-    if (plates.length > 0){
-      $("#name").append(plates[i]);
-    };
-  };
+
+function mapPlateList(plates){
+  JSON.stringify(plates);
+  var plateList = plates.map(plates =>
+    `<li class="name">${plates}</li>`
+    );
+
+  $(".plate-names").html(plateList);
 };
 
 // Plates argument is an object. 
-function displayPlates(plates){
-  console.log(plates);
-  appendPlates(plates);
+function displayPlates(plates, plateList){
+  mapPlateList(plates);
   $("#results-list").fadeOut(1000);
   $( "#your-plates").slideDown(2500);
-  $( "#your-plates" ).removeClass("hidden");
+  $( "#your-plates" ).removeClass("hidden")
 };
 
 // Because handleLoadPlates() is only called from the results state.
 // We can safely call displayPlates.
 function handleLoadPlates(event){
   let plates = [];
-  plates = localStorage.getItem("plates");
-  JSON.parse(plates);
+  plates = JSON.parse(localStorage.getItem("plates"));
+  // JSON.parse(plates);
+  console.log(plates);
   displayPlates(plates);
 };
 
 function handleAddButton(event){
-  // handlePlates(plates);
   console.clear();
   console.log(event);
+
   let restaurant = event.currentTarget.id;
   let plates = localStorage.getItem("plates");
   
   plates = JSON.parse(plates);
 
+  // Max number of restaurants to be added to your plates.
   const MAX_INDEX = 5;
 
   if (plates.length < MAX_INDEX){
@@ -113,8 +116,8 @@ function loadPlates(){};
 
 // This function clears out user prior search input
 function clearInputFields(elementId){
-  document.getElementById("search-term").value = "";
-  document.getElementById("cuisine").value = "";
+  $("#search-term").val("");
+  $("#cuisine").val("");
 };
 
 function handleBackButton(event){
