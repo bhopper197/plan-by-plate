@@ -216,6 +216,10 @@ ul, li {
   padding: 10px;
 }
 
+.plate-names {
+  font-size: 5rem;  
+}
+
 /* Style the result tiles. */
 .wrapper-tile {
   top: 30%;
