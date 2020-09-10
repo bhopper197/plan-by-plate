@@ -1,13 +1,10 @@
 'use strict';
 
-const apiKey = "a573f79888c882ab54b3f22d1b68c8cd";
 const url = "https://developers.zomato.com/api/v2.1/search";
-
-const searchInput = "search-term";
 
 $(function getAutocomplete() {
   $(".wrapper").hide(0).fadeIn(1500);
-
+  const searchInput = "search-term";
   // The Google Maps API's use Vanilla JavaScript in the example
   // of accessing the autocomplete function.
   var autoComplete = new 
@@ -26,23 +23,34 @@ $(function getAutocomplete() {
     });
   });
 
-function toggleModal(event) {
+function setZomatoApi(localStorage){
+  localStorage.setItem("apiKey", "a573f79888c882ab54b3f22d1b68c8cd");
+};
+
+function getZomatoApi(localStorage){
+  const zomatoApiKey = localStorage.getItem("apiKey");
+
+  return zomatoApiKey;
+};
+
+function toggleModalAddedRestaurant(event) {
   var modal = document.querySelector(".modal");
   var closeButton = document.querySelector(".close-button");
 
   modal.classList.toggle("show-modal");
-  closeButton.addEventListener("click", toggleModal);
+  closeButton.addEventListener("click", toggleModalAddedRestaurant);
+
+  window.onclick = function(event) {
+    if (event.target == modal) {
+      modal.style.display = modal.classList.toggle("show-modal");
+    }
+  }
 };
 
-
-function getPlate(localStorage){
-};
-
-
-function mapPlateList(plates){
+function mapPlatesToDisplay(plates){
   JSON.stringify(plates);
   var plateList = plates.map(plates =>
-    `<li class="name">${plates}</li>`
+    `<li class="plate-item">${plates}</li>`
     );
 
   $(".plate-names").html(plateList);
@@ -50,10 +58,10 @@ function mapPlateList(plates){
 
 // Plates argument is an object. 
 function displayPlates(plates, plateList){
-  mapPlateList(plates);
+  mapPlatesToDisplay(plates);
   $("#results-list").fadeOut(1000);
   $( "#your-plates").slideDown(2500);
-  $( "#your-plates" ).removeClass("hidden")
+  $( "#your-plates" ).removeClass("hidden");
 };
 
 // Because handleLoadPlates() is only called from the results state.
@@ -61,45 +69,37 @@ function displayPlates(plates, plateList){
 function handleLoadPlates(event){
   let plates = [];
   plates = JSON.parse(localStorage.getItem("plates"));
-  // JSON.parse(plates);
-  console.log(plates);
   displayPlates(plates);
 };
 
 function handleAddButton(event){
-  console.clear();
-  console.log(event);
-
   let restaurant = event.currentTarget.id;
   let plates = localStorage.getItem("plates");
   
   plates = JSON.parse(plates);
 
   // Max number of restaurants to be added to your plates.
-  const MAX_INDEX = 5;
+  const MaxNumberOfPlates = 5;
 
-  if (plates.length < MAX_INDEX){
+  if (plates.length < MaxNumberOfPlates){
     // Push new restaurant to beginning of array.
     plates.unshift(restaurant);
     localStorage.setItem("plates", JSON.stringify(plates));
-  } else if (plates.length === MAX_INDEX){
+  } else if (plates.length === MaxNumberOfPlates){
     // Still push new restaurant into beginning of array.
     plates.unshift(restaurant);
     // But since the array length is at its max, delete oldest item in plates.
     plates.splice(-1, 1);
     localStorage.setItem("plates", JSON.stringify(plates));
   }
-  console.log(localStorage);
-  toggleModal();
+  toggleModalAddedRestaurant();
 };
 
 function handleBackToResults(event){
-  $("#results-list").fadeIn(1000)
+  $("#results-list").fadeIn(1000);
   $( "#your-plates").slideUp(2500);
 };
 
-// We need to set an event listener that knows which button is pressed.
-// And then attach that button press to the restaurant name that was selected.
 function setAddButton(){
   $( ".add" ).on("click", handleAddButton);
 };
@@ -111,8 +111,6 @@ function setPlatesButton(event){
 function setBackToResultsButton(event){
   $( "#back-to-results" ).click(handleBackToResults)
 };
-
-function loadPlates(){};
 
 // This function clears out user prior search input
 function clearInputFields(elementId){
@@ -133,12 +131,16 @@ function handleBackButton(event){
 
 function onSearchSubmit(event){
     $( ".wrapper" ).slideUp(1500);
+    // The values of the latitude and longitude are hidden inside the HTML.
+    // Thus we can store the values that we get from the getAutoComplete function
+    // without disrupting the viewport for the user.
     const latitude = $("#latitude-input").val();
     const longitude = $("#longitude-input").val();
+
     const cuisine = $("#cuisine").val();
 
     var params = {
-      userKey: apiKey,
+      userKey: getZomatoApi(localStorage),
       url: url,
       q: cuisine, // Pass in the user query string.
       lat: latitude, // Pass in the lat from the autocomplete.
@@ -146,7 +148,7 @@ function onSearchSubmit(event){
       count: 5, // Limit results to 5 at a time.
     };
 
-    return getRestaurants(params);
+    getRestaurants(params);
 };
 
 function makeTileHtml(restaurantProps){
@@ -187,7 +189,6 @@ function makeErrorMessage(msg){
 };
 
 function displayRestaurants(responseJson){
-    console.log(responseJson);
     // Empty out any prior results.
     $("#results-list").empty();
     // Iterate over the array of restaurants to gather the data to display to the user.
@@ -195,18 +196,12 @@ function displayRestaurants(responseJson){
       var restaurantProps = {
         name: 
         responseJson.restaurants[i].restaurant.name,
-        
-        timings: 
-        responseJson.restaurants[i].restaurant.timings,
   
         user_rating: 
         responseJson.restaurants[i].restaurant.user_rating.aggregate_rating,
 
         menu:
         responseJson.restaurants[i].restaurant.menu_url,
-
-        image:
-        responseJson.restaurants[i].restaurant.featured_image,
 
         cost:
         responseJson.restaurants[i].restaurant.average_cost_for_two,
@@ -241,37 +236,6 @@ function formatQueryParams(params) {
   return queryItems.join('&');
 }
 
-function getRestaurantProps(responseJson){
-  for (let i = 0; i < responseJson.restaurants.length; i++){
-    var restaurantProps = {
-      name: 
-      responseJson.restaurants[i].restaurant.name,
-      
-      timings: 
-      responseJson.restaurants[i].restaurant.timings,
-
-      user_rating: 
-      responseJson.restaurants[i].restaurant.user_rating.aggregate_rating,
-
-      menu:
-      responseJson.restaurants[i].restaurant.menu_url,
-
-      image:
-      responseJson.restaurants[i].restaurant.featured_image,
-
-      cost:
-      responseJson.restaurants[i].restaurant.average_cost_for_two,
-
-      currency:
-      responseJson.restaurants[i].restaurant.currency,
-
-      type:
-      responseJson.restaurants[i].restaurant.establishment
-    };
-  };
-  return restaurantProps;
-};
-
 function getRestaurants(params) {
   const options = {
     headers: new Headers({
@@ -296,7 +260,6 @@ function getRestaurants(params) {
       throw new Error(response.statusText);
     })
     .then((responseJson) => displayRestaurants(responseJson))
-    .then(responseJson => console.log(responseJson))
     // .then(responseJson => {
     //   if(responseJson === null){
     //     $("#error").removeClass("hidden");
@@ -308,12 +271,13 @@ function getRestaurants(params) {
     // });
 }
 
-function watchForm() {
+function initApp() {
   $('form').submit(event => {
     event.preventDefault();
     // TO DO: When the user goes back to search.
     // Plates is reset to an empty array. 
     // Deleting the users saved restaurants.
+    setZomatoApi(localStorage);
     localStorage.setItem("plates", JSON.stringify([]));
     onSearchSubmit(event);
     handleBackButton(event);
@@ -322,4 +286,4 @@ function watchForm() {
   });
 };
 
-$(watchForm);
+$(initApp);
