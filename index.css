@@ -216,6 +216,12 @@ ul, li {
   padding: 10px;
 }
 
+li.plate-item {
+  display: flex;
+  justify-content: flex-start;
+  align-items: flex-start;
+}
+
 .plate-names {
   font-size: 5rem;  
 }
