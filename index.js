@@ -213,10 +213,9 @@ function setBackToResultsButton(event){
 function handleBackButton(event){
   $( "#back" ).click(function() {
     clearInputFields();
-    $( "#your-plates").fadeOut(1500)
-    $(".header").slideUp(1500);
-    $("#results-list").fadeOut(1000);
-    $("#error").fadeOut(1000);
+    $("#your-plates").fadeOut(1000)
+    $(".header").slideUp(1000);
+    $("#results-list").fadeOut(1000).hide();
     $( ".wrapper" ).fadeIn(2000);
   });
 };
@@ -278,8 +277,8 @@ function getRestaurants(params) {
     })
     .then(responseJson => {
       if(responseJson.results_found === 0){
-        $("#error").removeClass("hidden");
-        $('#error-message').hide().fadeIn(1000).append(makeErrorMessage());
+        $(".header").hide().slideDown(1000);
+        $('#results-list').hide().fadeIn(1000).append(makeErrorMessage());
       }
     })
     .catch(err => {
