@@ -2,25 +2,26 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+	<meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 	<title>Plan By Plate</title>
     <link rel="stylesheet" href="index.css">
     <link rel="icon" type="image/png" href="images/favicon.png"/>
 </head>
 
-<div class="header hidden" id="myHeader">
-    <h2 class="header-content">
-        <img class= "header-img" src="images/header.png" alt="Go back to search button">
-        <button id="plates">
-            <img class="text-img" src="images/logo-text.png" alt="Your Plates">
-        </button>
-        <button id="back">
-            <img class="search-img" src="images/back-to-search.png" alt="Back to search">
-        </button>
-    </h2>
-</div>
-
 <body>
+    <!-- HEADER -->
+    <div class="header hidden" id="myHeader">
+        <h2 class="header-content">
+            <img class= "header-img" src="images/header.png" alt="Go back to search button">
+            <button id="plates">
+                <img class="text-img" src="images/logo-text.png" alt="Your Plates">
+            </button>
+            <button id="back">
+                <img class="search-img" src="images/back-to-search.png" alt="Back to search">
+            </button>
+        </h2>
+    </div>
+
     <!-- SEARCH RESULTS -->
     <section id="results" class="hidden">
         <ul id="results-list">
@@ -73,7 +74,7 @@
 <!-- jQuery library. -->
 <script src="https://unpkg.com/jquery" crossorigin="anonymous"></script>
 
-    <!-- Google Maps Javascript Library. -->
+<!-- Google Maps Javascript Library. -->
 <script src="//maps.googleapis.com/maps/api/js?v=3.exp&libraries=places&key=AIzaSyBoRpN_--w3lFXRNu1PIv_cho5xqP1E32s"></script>
 
 <!-- Local JavaScript file. -->
